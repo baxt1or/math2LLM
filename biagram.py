@@ -69,7 +69,7 @@ def estimate_loss():
 
 
 
-class BiagramModel(nn.Module):
+class BiagramLanguageModel(nn.Module):
     def __init__(self, vocab_size):
         super().__init__()
         self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
@@ -103,7 +103,7 @@ class BiagramModel(nn.Module):
         return idx
     
 
-model = BiagramModel(vocab_size)
+model = BiagramLanguageModel(vocab_size)
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
