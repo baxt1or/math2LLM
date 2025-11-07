@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 
-file_path = "/Users/baxtiyorbekmurodov/Desktop/math2LLM/data/input.txt"
+file_path = "/Users/baxtiyorbekmurodov/Desktop/math2LLM/data/ikki_eshik_orasi.txt"
 
 batch_size = 32
 block_size = 8
@@ -66,9 +66,9 @@ def estimate_loss():
             logits, loss = model(X, Y)
             losses[k] = loss.item()
         out[split] = losses.mean()
+
     model.train()
     return out
-
 
 
 
@@ -76,17 +76,12 @@ def estimate_loss():
 class BiagramLanguageModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
-        self.position_embedding_table = nn.Embedding(block_size, n_embd)
-        self.lm_head = nn.Linear(n_embd, vocab_size)
+        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
     
     def forward(self, idx, targets=None):
         B, T = idx.shape
 
-        tok_emb = self.token_embedding_table(idx)
-        pos_emb = self.position_embedding_table(torch.arange(T))
-        x = tok_emb + pos_emb
-        logits = self.lm_head(x)
+        logits = self.token_embedding_table(idx)
 
         if targets is None:
             loss = None
@@ -100,8 +95,8 @@ class BiagramLanguageModel(nn.Module):
     
     def generate(self, idx, max_new_tokens):
 
-        for i in range(max_new_tokens):
-            logits, loss = self(idx)
+        for _ in range(max_new_tokens):
+            logits, _ = self(idx)
             logits = logits[:, -1, :]
 
             probs = F.softmax(logits, dim=-1)
@@ -114,15 +109,8 @@ class BiagramLanguageModel(nn.Module):
     
 
 
-
-
-
-
 model = BiagramLanguageModel()
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
-
-
-
 
 
 for i in range(epochs):
