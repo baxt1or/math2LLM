@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 
-file_path = "/Users/baxtiyorbekmurodov/Desktop/math2LLM/data/ikki_eshik_orasi.txt"
+file_path = "/"
 
 batch_size = 32
 block_size = 8

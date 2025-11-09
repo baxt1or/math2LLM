@@ -25,7 +25,6 @@ with open(file_path, 'r') as f:
 
 
 chars = sorted(list(set(text)))
-# vocab_size = 256
 vocab_size = len(chars)
 
 
@@ -76,7 +75,7 @@ def estimate_loss():
 
 
 
-class Head(nn.Module):
+class SelfAttention(nn.Module):
     def __init__(self, head_size):
         super().__init__()
         self.key = nn.Linear(n_embd, head_size, bias=False)
@@ -107,7 +106,7 @@ class Head(nn.Module):
 class MultiHeadAttention(nn.Module):
     def __init__(self, num_heads, head_size):
         super().__init__()
-        self.heads = nn.ModuleList(Head(head_size) for _ in range(num_heads))
+        self.heads = nn.ModuleList(SelfAttention(head_size) for _ in range(num_heads))
         self.proj = nn.Linear(n_embd, n_embd)
         self.dropout = nn.Dropout(dropout)
     
