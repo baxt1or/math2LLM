@@ -87,7 +87,7 @@ class SelfAttention(nn.Module):
         self.dropout = nn.Dropout(dropout)
     
     def forward(self, x):
-        B, T, C = x.shape
+        _, T, C = x.shape
         
         k = self.key(x)
         q = self.query(x)
