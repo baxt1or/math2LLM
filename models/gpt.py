@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 
-file_path = "/Users/baxtiyorbekmurodov/Desktop/math2LLM/data/input.txt"
+file_path = "../data/input.txt"
 
 batch_size = 64
 block_size = 256
